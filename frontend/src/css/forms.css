@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300&family=Oxygen:wght@300&display=swap');
+
+.split-l {
+    height: 100%;
+    width: 65%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    left: 0;
+    font-family: 'Inria Sans', sans-serif;
+}
+
+.split-r {
+    height: 100%;
+    width: 35%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    right: 0;
+    font-family: 'Inria Sans', sans-serif;
+}
+  
+.title {
+    font-weight: bold !important;
+}
+
+.green-text {
+    color: #2DCF51;
+    font-weight: bold;
+}
+
+.form-button {
+    color: white;
+    background-color: #28B498;
+    border-radius: 18px;
+    text-align: center;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    font-size: 20px;
+    border: none;
+    width: 40%;
+    text-decoration: none;
+}
+
+.form-button:hover {
+    background-color: #1e8470;
+    cursor: pointer;
+    color: white;
+}
+
+.green-gradient {
+    background-image: url("../../public/img/gradient.png");
+}
+
+.input-fields {
+    border-radius: 20px;
+    border: black 2px solid;
+    color: black;
+    background-color: #EDF5F3;
+    text-align: left;
+    font-size: 20px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-top: 5%;
+    width: 55%;
+    align-items: center;
+    padding-left: 2%;
+}
+
+.center-text {
+    text-align: center;
+    font-size: 90px;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.margin-top {
+    margin-top: 8%;
+    text-align: center;
+}
+
+.subheader {
+    color: white;
+    font-size: 52px;
+    margin-top: 50%;
+    margin-bottom: 0;
+}
+
+.center {
+    text-align: center;
+}
+
+p {
+    font-size: 25px;
+    color: white;
+    margin-bottom: 10%;
+    font-weight: lighter;
+}
+
+.go-home {
+    color: white;
+    background-color: #28B498;
+    border-radius: 18px;
+    text-align: center;
+    font-size: 15px;
+    border: none;
+    position: absolute;
+    left: 10;
+    top: 10;
+    padding: 1%;
+}
+
+.go-home:hover {
+    cursor: pointer;
+    background-color: #1e8470;
+}
+.red-text {
+    color: #bb2a2a;
+}
