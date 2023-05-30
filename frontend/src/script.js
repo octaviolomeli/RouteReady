@@ -109,13 +109,13 @@ function checkBartValidity(bartJSON, station, direction) {
 }
 
 async function bus_predict(stopId){
-    let url = "http://api.511.org/transit/StopMonitoring?api_key=78f2c480-e0ec-430a-b572-7521e6b42448&agency=AC&stopcode="+stopId+"&format=JSON";
+    let url = "http://api.511.org/transit/StopMonitoring?api_key=[redacted]&agency=AC&stopcode="+stopId+"&format=JSON";
     const response = await fetch(url);
     return await response.json();
 }
 
 async function BART_predict(station, direction){
-    let url = `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${station}&key=MW9S-E7SL-26DU-VV8V&dir=${direction.substring(0,1)}&json=y`;
+    let url = `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${station}&key=[redacted]&dir=${direction.substring(0,1)}&json=y`;
     const response = await fetch(url);
     return await response.json();
 } 
