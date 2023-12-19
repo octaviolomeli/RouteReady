@@ -68,7 +68,8 @@ function refresh_entry(row_id){
                 html_arrivals,
                 possible,
                 row.children[7].innerHTML,
-                row_id);
+                row_id
+            );
         });
     }
     else {
@@ -89,7 +90,8 @@ function refresh_entry(row_id){
                 html_arrivals,
                 "N/A with BART",
                 "0",
-                row_id);
+                row_id
+            );
         });
     }
 }
@@ -109,14 +111,12 @@ function checkBartValidity(bartJSON, station, direction) {
 }
 
 async function bus_predict(stopId){
-    let url = "http://api.511.org/transit/StopMonitoring?api_key=[redacted]&agency=AC&stopcode="+stopId+"&format=JSON";
-    const response = await fetch(url);
+    const response = await fetch(`http://localhost:8888/busData/${stopId}`);
     return await response.json();
 }
 
 async function BART_predict(station, direction){
-    let url = `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${station}&key=[redacted]&dir=${direction.substring(0,1)}&json=y`;
-    const response = await fetch(url);
+    const response = await fetch(`http://localhost:8888/bartData/${station}/${direction}`);
     return await response.json();
 } 
 

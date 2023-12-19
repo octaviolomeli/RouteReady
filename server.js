@@ -1,12 +1,16 @@
 // imports
+require("dotenv").config();
 const fs = require("fs");
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const axios = require('axios');
 // database stuff
 const mongoServer = require("./database/db");
 const User = require("./database/User");
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 mongoServer();
 
@@ -14,6 +18,34 @@ mongoServer();
 app.use(express.urlencoded({ extended: false}));
 app.use(cors());
 app.use(express.json());
+
+// passport.use(new LocalStrategy({
+//     usernameField: 'email',
+//     passwordField: 'password',
+//     passReqToCallback: true,
+//     session: false
+//   },
+//   async (email, password, done) => {
+//     try {
+//         const user = await User.findOne({ email: email });
+        
+//         if (!user) { 
+//             return done(null, false, { error: "Incorrect username"})
+//         }
+
+//         const passwordsMatch = await bcrypt.compare(password, user.password);
+
+//         if (!passwordsMatch) {
+//             return done(null, false, { error: "Incorrect password"})
+//         }
+
+//         return done(null, user);
+
+//     } catch (err) {
+//         return done(err);
+//     }
+//   })
+// );
 
 // when user logs in, direct them to the monitor page if successful
 app.post("/sign-in", async (req, res) => {
@@ -37,6 +69,10 @@ app.post("/sign-in", async (req, res) => {
         res.status(500).json({message: "Server Error"})
     }
 })
+
+// app.post("/sign-in", passport.authenticate('local', { failureRedirect: '/sign-in'}), (req, res) => {
+//     res.json({mode: 'sign-in', msg: 'success', data: user});
+// })
 
 // when user signs up, make an account and direct them to the login page
 app.post('/sign-up', async (req, res) => {
@@ -124,5 +160,28 @@ app.get('/data/:type', async (req, res) => {
         res.send(JSON.parse(jsonString));
       });
 });
+
+app.get('/busData/:stopId', async (req, res) => {
+    const stopId = req.params.stopId;
+    const url = `http://api.511.org/transit/StopMonitoring?api_key=${process.env.BUS_KEY}&agency=AC&stopcode=${stopId}&format=JSON`;
+    try {
+        const data = await axios.get(url);
+        res.json(data.data);
+    } catch (e) {
+        console.error(e);
+    }
+})
+
+app.get('/bartData/:station/:direction', async (req, res) => {
+    const station = req.params.station;
+    const direction = req.params.direction;
+    const url = `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${station}&key=${process.env.BART_KEY}&dir=${direction.substring(0,1)}&json=y`;
+    try {
+        const data = await axios.get(url);
+        res.json(data.data);
+    } catch (e) {
+        console.error(e);
+    }
+})
 
 app.listen(8888, () => {console.log("App is running on http://localhost:8888")});
