@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// User Schema
 const UserSchema = mongoose.Schema({
   email: {
     type: String,
@@ -83,4 +84,3 @@ const UserSchema = mongoose.Schema({
 
 // export model user with UserSchema
 module.exports = mongoose.model("user", UserSchema);
-

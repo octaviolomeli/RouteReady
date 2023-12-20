@@ -16,7 +16,7 @@ const Form = (props) => {
       password: inputPassword
     }
     fetch(
-      'http://localhost:8888'+props.action_page, {
+      'http://localhost:8888/form/'+props.action_page, {
         method: "POST",
         headers: {
           "Content-Type": 'application/json'

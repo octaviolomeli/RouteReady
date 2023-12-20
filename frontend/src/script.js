@@ -1,3 +1,4 @@
+// Add entry to database
 function add(type, email, JSONData) {
     const entry_selected = document.getElementById(type+"_row").value;
     const direction = document.getElementById(type+"_directions").value;
@@ -7,9 +8,12 @@ function add(type, email, JSONData) {
     if (type === 'bus') {
         const busLine = document.getElementById("bus_lines").value;
         const minutes = document.getElementById("bus_walk").value;
+
+        // Check if valid bus information
         if (checkBusValidity(JSONData, busLine, direction, stopId)) {
             bus_predict(stopId)
             .then(jsonData => {
+                // Update HTML with JSON data
                 const res = bus_arrivals(jsonData, busLine);
                 const html_arrivals = res[1];
                 const arrival_times = res[0];
@@ -26,10 +30,13 @@ function add(type, email, JSONData) {
                 }
             });
         }
-    } else {
+    } 
+    else {
+        // Check if valid BART information
         if (checkBartValidity(JSONData, stopId, direction)) {
             BART_predict(stopId, direction)
             .then(jsonData => {
+                // Update HTML with JSON data
                 const res = bart_arrivals(jsonData);
                 const html_arrivals = res[0];
                 const html_lines = res[1];
@@ -96,7 +103,7 @@ function refresh_entry(row_id){
     }
 }
 
-
+// Check if valid Bus option
 function checkBusValidity(busJSON, busLine, direction, stopId) {
     for (const entry of busJSON[busLine]) {
         if (entry['Direction'] === direction && entry['StopId'] === stopId) {
@@ -106,17 +113,20 @@ function checkBusValidity(busJSON, busLine, direction, stopId) {
     return false;
 }
 
+// Check if valid BART option
 function checkBartValidity(bartJSON, station, direction) {
     return bartJSON[station][direction].length !== 0;
 }
 
+// Call backend for bus data
 async function bus_predict(stopId){
-    const response = await fetch(`http://localhost:8888/busData/${stopId}`);
+    const response = await fetch(`http://localhost:8888/data/busData/${stopId}`);
     return await response.json();
 }
 
+// Call backend for BART data
 async function BART_predict(station, direction){
-    const response = await fetch(`http://localhost:8888/bartData/${station}/${direction}`);
+    const response = await fetch(`http://localhost:8888/data/bartData/${station}/${direction}`);
     return await response.json();
 } 
 
@@ -186,9 +196,10 @@ function isItPossible(arrival_times, walk_time){
     return result.substring(0, result.length - 4); // to remove the last unneccessary <br>
 }
 
+// Call backend and update the entry coressponding to email
 function update_entry(id, type, line, direction, stop_station, arrival, possible, min_walk, entry_selected, email){    
     var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:8888/update_user", true);
+        xhr.open("POST", "http://localhost:8888/data/update_user", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
             entry_name: entry_selected,
@@ -213,7 +224,7 @@ function delete_entry(row_id, email){
     }
     // go to database and update the entry column
     var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:8888/update_user", true);
+        xhr.open("POST", "http://localhost:8888/data/update_user", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
             entry_name: row_id,

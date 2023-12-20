@@ -8,11 +8,11 @@ var bartJSON;
 
 (async () => {
     try {
-        fetch('http://localhost:8888/data/bus')
+        fetch('http://localhost:8888/data/json/bus')
         .then(response => response.json())
         .then(JSONData => busJSON = JSONData);
 
-        fetch('http://localhost:8888/data/bart')
+        fetch('http://localhost:8888/data/json/bart')
         .then(response => response.json())
         .then(JSONData => bartJSON = JSONData);
     } catch (error) {
@@ -32,7 +32,7 @@ function Monitor() {
     useEffect( () => { 
         async function fetchUserData() {
             try {
-                fetch('http://localhost:8888/user/'+searchParams.get('email')+'/'+encodeURIComponent(searchParams.get('password')))
+                fetch('http://localhost:8888/data/user/'+searchParams.get('email')+'/'+encodeURIComponent(searchParams.get('password')))
                 .then(response => response.json())
                 .then(data => {
                     if (data.valid === 'true') {
