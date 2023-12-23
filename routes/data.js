@@ -6,8 +6,8 @@ const fs = require("fs");
 const axios = require('axios');
 
 // Import Database
-const connectDB = require("./database/db");
-const User = require("./database/User");
+const connectDB = require("../database/db");
+const User = require("../database/User");
 connectDB();
 
 // Call 511 API to get AC Transit bus data
@@ -34,7 +34,7 @@ router.get('/bartData/:station/:direction', checkAuthenticated, async (req, res)
 
 // Retrieve data from JSON files
 router.get('/json/:type', async (req, res) => {
-    fs.readFile(`../frontend/public/data/${req.params.type}data.json`, "utf8", (err, jsonString) => {
+    fs.readFile(`./frontend/public/data/${req.params.type}data.json`, "utf8", (err, jsonString) => {
         if (err) {
           console.log("File read failed:", err);
           return;

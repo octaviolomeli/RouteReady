@@ -4,8 +4,8 @@ const router = express.Router()
 const passport = require('passport')
 
 // Import Database
-const connectDB = require("./database/db");
-const User = require("./database/User");
+const connectDB = require("../database/db");
+const User = require("../database/User");
 connectDB();
 
 // Route for signing and authenticating
